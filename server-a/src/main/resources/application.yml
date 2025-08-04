@@ -1,41 +1,55 @@
+# ===============================
+# Server A Configuration
+# ===============================
 server:
-  port: 8081
-  b:
-    url: https://localhost:8082
-  ssl:
-    enabled: true
-    key-store: classpath:keystore/server-a-keystore.p12
-    key-store-password: servera123
-    key-store-type: PKCS12
-    key-alias: server-a
-    trust-store: classpath:keystore/truststore.p12
-    trust-store-password: truststore123
-    trust-store-type: PKCS12
-    client-auth: need
+  port: 8081  # Port on which Server A runs
 
+  b:
+    url: https://localhost:8082  # URL of Server B (used for communication)
+
+  ssl:
+    enabled: true  # Enables HTTPS for incoming connections to Server A
+    key-store: classpath:keystore/server-a-keystore.p12  # Keystore containing Server A's certificate
+    key-store-password: servera123  # Password for keystore
+    key-store-type: PKCS12  # Keystore format
+    key-alias: server-a  # Alias for Server A's certificate in keystore
+    trust-store: classpath:keystore/truststore.p12  # Truststore containing Server B's cert or CA
+    trust-store-password: truststore123  # Password for truststore
+    trust-store-type: PKCS12  # Truststore format
+    client-auth: need  # Require client certificates (mutual TLS)
+
+# ===============================
+# Spring Boot & Logging
+# ===============================
 spring:
   application:
-    name: server-a
+    name: server-a  # Application name used for discovery/logging, etc.
+
   logging:
     level:
-      com.example.servera: DEBUG
-      reactor.netty: DEBUG
+      com.example.servera: DEBUG  # Enable debug logs for your application package
+      reactor.netty: DEBUG  # Enable debug logs for Netty (useful for diagnosing SSL issues)
 
+# ===============================
+# Custom SSL Config for WebClient (outgoing)
+# ===============================
 ssl:
   keystore:
-    path: src/main/resources/keystore/server-a-keystore.p12
-    password: servera123
+    path: src/main/resources/keystore/server-a-keystore.p12  # Path to keystore for WebClient
+    password: servera123  # Keystore password
+
   truststore:
-    path: src/main/resources/keystore/truststore.p12
-    password: truststore123
+    path: src/main/resources/keystore/truststore.p12  # Path to truststore for WebClient
+    password: truststore123  # Truststore password
 
-
-
+# ===============================
+# Actuator / Monitoring Configuration
+# ===============================
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info  # Expose health and info actuator endpoints
   endpoint:
     health:
-      show-details: always
+      show-details: always  # Show detailed health info (useful for debugging)

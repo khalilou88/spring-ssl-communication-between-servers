@@ -1,39 +1,55 @@
+# ===============================
+# Server B Configuration
+# ===============================
 server:
-  port: 8082
-  a:
-    url: https://localhost:8081
-  ssl:
-    enabled: true
-    key-store: classpath:keystore/server-b-keystore.p12
-    key-store-password: serverb123
-    key-store-type: PKCS12
-    key-alias: server-b
-    trust-store: classpath:keystore/truststore.p12
-    trust-store-password: truststore123
-    trust-store-type: PKCS12
-    client-auth: need
+  port: 8082  # Port on which Server B runs
 
+  a:
+    url: https://localhost:8081  # URL of Server A (used for communication)
+
+  ssl:
+    enabled: true  # Enables HTTPS for incoming connections to Server B
+    key-store: classpath:keystore/server-b-keystore.p12  # Keystore containing Server B's certificate
+    key-store-password: serverb123  # Password for the keystore
+    key-store-type: PKCS12  # Format of the keystore
+    key-alias: server-b  # Alias for Server B's certificate in the keystore
+    trust-store: classpath:keystore/truststore.p12  # Truststore containing Server A’s cert or CA
+    trust-store-password: truststore123  # Password for the truststore
+    trust-store-type: PKCS12  # Format of the truststore
+    client-auth: need  # Require client certificates (for mutual TLS)
+
+# ===============================
+# Spring Boot & Logging
+# ===============================
 spring:
   application:
-    name: server-b
+    name: server-b  # Application name used for logs, tracing, etc.
+
   logging:
     level:
-      com.example.serverb: DEBUG
-      reactor.netty: DEBUG
+      com.example.serverb: DEBUG  # Enable debug logs for your application's package
+      reactor.netty: DEBUG  # Enable Netty logs (helps with SSL troubleshooting)
 
+# ===============================
+# Custom SSL Config for WebClient (outgoing)
+# ===============================
 ssl:
   keystore:
-    path: src/main/resources/keystore/server-b-keystore.p12
-    password: serverb123
-  truststore:
-    path: src/main/resources/keystore/truststore.p12
-    password: truststore123
+    path: src/main/resources/keystore/server-b-keystore.p12  # Filesystem path to keystore used by WebClient
+    password: serverb123  # Keystore password for WebClient
 
+  truststore:
+    path: src/main/resources/keystore/truststore.p12  # Filesystem path to truststore used by WebClient
+    password: truststore123  # Truststore password for WebClient
+
+# ===============================
+# Actuator / Monitoring Configuration
+# ===============================
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info  # Expose health and info actuator endpoints
   endpoint:
     health:
-      show-details: always
+      show-details: always  # Show detailed info in /actuator/health (useful for debugging)
