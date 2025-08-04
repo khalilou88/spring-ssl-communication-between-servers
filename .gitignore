@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/server-a/src/main/resources/keystore/
+/server-b/src/main/resources/keystore/
