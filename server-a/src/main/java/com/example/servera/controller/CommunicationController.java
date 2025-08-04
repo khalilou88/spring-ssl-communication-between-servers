@@ -39,7 +39,7 @@ public class CommunicationController {
     }
 
     @PostMapping("/send-to-server-b")
-    public ResponseEntity<String> sendMessageToServerB(@RequestParam String message) {
+    public ResponseEntity<String> sendMessageToServerB(@RequestParam("message") String message) {
         logger.info("Server A initiating communication to Server B with message: {}", message);
 
         try {

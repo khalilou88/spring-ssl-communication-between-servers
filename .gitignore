@@ -32,5 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+/ca-cert.pem
+/client-cert.pem
+/client-key.pem
 /server-a/src/main/resources/keystore/
 /server-b/src/main/resources/keystore/
