@@ -1,0 +1,40 @@
+server:
+  port: 8082
+  ssl:
+    enabled: true
+    key-store: classpath:keystore/server-b-keystore.p12
+    key-store-password: serverb123
+    key-store-type: PKCS12
+    key-alias: server-b
+    trust-store: classpath:keystore/truststore.p12
+    trust-store-password: truststore123
+    trust-store-type: PKCS12
+    client-auth: need
+
+spring:
+  application:
+    name: server-b
+  logging:
+    level:
+      com.example.serverb: DEBUG
+      reactor.netty: DEBUG
+
+ssl:
+  keystore:
+    path: src/main/resources/keystore/server-b-keystore.p12
+    password: serverb123
+  truststore:
+    path: src/main/resources/keystore/truststore.p12
+    password: truststore123
+
+  a:
+    url: https://localhost:8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
