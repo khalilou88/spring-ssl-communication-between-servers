@@ -120,7 +120,8 @@ You can also send messages directly to the receive endpoints:
 
 ```bash
 # Send to Server A
-curl -k -X POST https://localhost:8081/api/v1/communication/receive \
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     -X POST https://localhost:8081/api/v1/communication/receive \
   -H "Content-Type: application/json" \
   -d '{
     "id": "test-123",
