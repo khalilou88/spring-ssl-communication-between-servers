@@ -186,12 +186,16 @@ Both servers expose actuator endpoints:
 
 ```bash
 # Health checks
-curl -k https://localhost:8081/actuator/health
-curl -k https://localhost:8082/actuator/health
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     https://localhost:8081/actuator/health
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     https://localhost:8082/actuator/health
 
 # Application info
-curl -k https://localhost:8081/actuator/info
-curl -k https://localhost:8082/actuator/info
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     https://localhost:8081/actuator/info
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     https://localhost:8082/actuator/info
 ```
 
 ## Troubleshooting
@@ -205,14 +209,6 @@ curl -k https://localhost:8082/actuator/info
 ### Debug Logging
 
 Both servers have debug logging enabled for SSL and communication components. Check the console output for detailed information about SSL handshakes and message exchanges.
-
-### Testing with curl
-
-When using curl with self-signed certificates, use the `-k` flag to skip certificate verification:
-
-```bash
-curl -k https://localhost:8081/api/v1/communication/health
-```
 
 ## Security Considerations
 
