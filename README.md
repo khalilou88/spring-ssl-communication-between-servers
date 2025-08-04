@@ -102,12 +102,12 @@ curl -k https://localhost:8082/api/v1/communication/health
 
 **Server A to Server B:**
 ```bash
-curl -k -X POST "https://localhost:8081/api/v1/communication/send-to-server-b?message=Hello from client"
+curl -k -X POST "https://localhost:8081/api/v1/communication/send-to-server-b?message=Hello-from-server-a"
 ```
 
 **Server B to Server A:**
 ```bash
-curl -k -X POST "https://localhost:8082/api/v1/communication/send-to-server-a?message=Hello from client"
+curl -k -X POST "https://localhost:8082/api/v1/communication/send-to-server-a?message=Hello-from-server-b"
 ```
 
 ### Direct Message Sending
