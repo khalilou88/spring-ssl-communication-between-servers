@@ -21,11 +21,11 @@ keytool -genkeypair -alias ca \
     -keyalg RSA -keysize 2048 -validity 365 \
     -dname "CN=LocalCA, OU=Development, O=Example Corp, L=City, S=State, C=US" \
     -keystore ca-keystore.p12 -storetype PKCS12 \
-    -storepass ca123 -keypass ca123
+    -storepass capass123 -keypass capass123
 
 # Export CA certificate
 keytool -exportcert -alias ca \
-    -keystore ca-keystore.p12 -storetype PKCS12 -storepass ca123 \
+    -keystore ca-keystore.p12 -storetype PKCS12 -storepass capass123 \
     -file ca-cert.crt
 
 # Generate Server A certificate
@@ -44,7 +44,7 @@ keytool -certreq -alias server-a \
 
 # Sign Server A certificate with CA
 keytool -gencert -alias ca \
-    -keystore ca-keystore.p12 -storetype PKCS12 -storepass ca123 \
+    -keystore ca-keystore.p12 -storetype PKCS12 -storepass capass123 \
     -infile server-a.csr -outfile server-a.crt \
     -validity 365 -ext SAN=dns:localhost,ip:127.0.0.1
 
@@ -74,7 +74,7 @@ keytool -certreq -alias server-b \
 
 # Sign Server B certificate with CA
 keytool -gencert -alias ca \
-    -keystore ca-keystore.p12 -storetype PKCS12 -storepass ca123 \
+    -keystore ca-keystore.p12 -storetype PKCS12 -storepass capass123 \
     -infile server-b.csr -outfile server-b.crt \
     -validity 365 -ext SAN=dns:localhost,ip:127.0.0.1
 
