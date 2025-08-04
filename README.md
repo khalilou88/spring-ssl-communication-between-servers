@@ -92,22 +92,26 @@ Check if servers are running:
 
 ```bash
 # Server A
-curl -k https://localhost:8081/api/v1/communication/health
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     https://localhost:8081/api/v1/communication/health
 
 # Server B
-curl -k https://localhost:8082/api/v1/communication/health
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     https://localhost:8082/api/v1/communication/health
 ```
 
 ### Manual Communication
 
 **Server A to Server B:**
 ```bash
-curl -k -X POST "https://localhost:8081/api/v1/communication/send-to-server-b?message=Hello-from-server-a"
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     -X POST "https://localhost:8081/api/v1/communication/send-to-server-b?message=Hello-from-server-a"
 ```
 
 **Server B to Server A:**
 ```bash
-curl -k -X POST "https://localhost:8082/api/v1/communication/send-to-server-a?message=Hello-from-server-b"
+curl --cert client-cert.pem --key client-key.pem --cacert ca-cert.pem \
+     -X POST "https://localhost:8082/api/v1/communication/send-to-server-a?message=Hello-from-server-b"
 ```
 
 ### Direct Message Sending
