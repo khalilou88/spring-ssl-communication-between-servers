@@ -1,5 +1,7 @@
 server:
   port: 8081
+  b:
+    url: https://localhost:8082
   ssl:
     enabled: true
     key-store: classpath:keystore/server-a-keystore.p12
@@ -27,8 +29,7 @@ ssl:
     path: src/main/resources/keystore/truststore.p12
     password: truststore123
 
-  b:
-    url: https://localhost:8082
+
 
 management:
   endpoints:
