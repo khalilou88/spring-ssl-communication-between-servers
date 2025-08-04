@@ -1,15 +1,15 @@
 package com.example.servera.config;
 
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
-import reactor.netty.tcp.SslProvider;
 
 import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -31,7 +31,7 @@ public class SslConfig {
 
     @Bean
     public WebClient webClient() throws Exception {
-        SSLContext sslContext = createSSLContext();
+        SslContext sslContext = createNettySslContext(); // Use Netty SslContext
 
         HttpClient httpClient = HttpClient.create()
                 .secure(sslSpec -> sslSpec.sslContext(sslContext));
@@ -41,7 +41,7 @@ public class SslConfig {
                 .build();
     }
 
-    private SSLContext createSSLContext() throws Exception {
+    private SslContext createNettySslContext() throws Exception {
         // Load keystore
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
         try (FileInputStream keyStoreFile = new FileInputStream(keystorePath)) {
@@ -60,10 +60,10 @@ public class SslConfig {
         TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trustStore);
 
-        // Create SSL context
-        SSLContext sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
-
-        return sslContext;
+        // Build Netty SslContext
+        return SslContextBuilder.forClient()
+                .keyManager(keyManagerFactory)
+                .trustManager(trustManagerFactory)
+                .build();
     }
 }
