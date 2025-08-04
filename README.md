@@ -66,21 +66,19 @@ This script will:
 ### 2. Build the Project
 
 ```bash
-mvn clean install
+./mvnw clean install
 ```
 
 ### 3. Run the Servers
 
 **Terminal 1 - Server A:**
 ```bash
-cd server-a
-mvn spring-boot:run
+./mvnw spring-boot:run -pl server-a
 ```
 
 **Terminal 2 - Server B:**
 ```bash
-cd server-b
-mvn spring-boot:run
+./mvnw spring-boot:run -pl server-b
 ```
 
 Server A will run on `https://localhost:8081`
